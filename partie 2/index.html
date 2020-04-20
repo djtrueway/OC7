@@ -10,14 +10,13 @@
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""
     />
-    <script src="/jquery/jquery.js"></script>
-    <link rel="stylesheet" href="/style.css" >
+    <link rel="stylesheet" href="style.css" >
     <title>OC7</title>
 </head>
 <body>
     <!-- Image and text -->
     <nav class="navbar navbar-light bg-primary">
-    <a class="navbar-brand text-light" href="#">
+    <a class="navbar-brand" href="#">
       <img src="/docs/4.4/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
       Restaurant a paris
     </a>
@@ -27,18 +26,21 @@
           <div class="col-md-8">
               <div id="map" class="mt-4"></div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
               <div id="restaurant">
-                <div class="card mt-4" style="width: 18rem;">
+                <div class="card mt-4 p-3" style="width: 18rem;">
                     <div class="card-header">
                       Restaurant
                     </div>
-                    <ul class="list-group list-group-flush">
-                     <!--
-                         <li class="list-group-item"></li>
-                      <li class="list-group-item"></li>
-                     -->
-                    </ul>
+                    <div class="form-group" >
+                        <div class="form-inline mt-3">
+                            <input class="form-control col-6" id="lat" placeholder="lat">
+                            <input class="form-control col-6" id="long" placeholder="long">
+                        </div>
+                        <input class="form-control mt-3" id='name' placeholder="name">
+                        <textarea col='6' class="form-control mt-3" id="avis"></textarea>
+                        <button class="btn btn-primary mt-3">Ajoute restaurant</button>
+                    </div>
                 </div>
               </div>
           </div>
@@ -50,11 +52,11 @@
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin="">
     </script>
-   <!-- <script
+    <script
      src="https://code.jquery.com/jquery-3.4.1.min.js"
      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-     crossorigin="anonymous"></script>  -->
+     crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="/index.js"></script>
+    <script src="index.js"></script>
 </html>

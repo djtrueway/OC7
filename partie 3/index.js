@@ -3,7 +3,7 @@ $(function(){
     let myLatitide = null;
     let myLongitude = null;
     let mymap = null;
-    let restau = [];
+    let Restau = [];
     let googleToken = 'AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew'
     
 
@@ -14,6 +14,10 @@ $(function(){
             myLongitude = position.coords.longitude;
             mapDisplay(myLatitide, myLongitude);
         });
+
+        $('button').click(function(){
+            addRestau($('#lat').val(), $('#long').val(),$('#name').val())
+        })
     
     } else {
         /* la géolocalisation n'est pas disponible */
@@ -25,7 +29,7 @@ $(function(){
 
 function mapDisplay(lat, long , data=[]){
 
-    mymap = L.map('map').setView([lat, long], 15);
+    mymap = L.map('map').setView([lat, long], 8);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGp0cnVld2F5IiwiYSI6ImNrODRvbHBqcTAxbXUzZnBleXR0cnQ0d2oifQ.PkWU4kpbQBnHCBkmTNHYtA', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -45,22 +49,9 @@ function mapDisplay(lat, long , data=[]){
         type: "GET",
         dataType: "json",
         success: function (jdata) {
-           restau = jdata
-           var i = 0;
-           let star_1 = new Array();
-           let count = []
-           restau.forEach(e =>{
-                let = element =  $('<li></li>').attr('class', 'list-group-item')
-                $('ul').append(element)
-                $('li')[i].innerText = e.restaurantName
-                e.ratings.forEach(i =>{
-                    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-                    star_1.push(i.stars)
-                    count.push(star_1.reduce(reducer))
-                    alert('reducer ' +count)
-                    addMarker(e.lat, e.long, e.restaurantName, i.comment)
-                })
-                i++;
+           Restau = jdata
+           Restau.forEach(e =>{
+                addMarker(e.lat, e.long, e.restaurantName)
         })
         },
         error : function(resultat, statut, erreur){
@@ -68,17 +59,17 @@ function mapDisplay(lat, long , data=[]){
         }
   
     });
-   
-}
 
-function addMarker (lat, long, text, comment){
+    mymap.on('click', onMapClick);
+}
+/** add marker to the map */
+function addMarker (lat, long, text){
     var marker = L.marker([lat, long]).addTo(mymap).on('click', (e) =>{
         addGoogleStreetView(e.latlng.lat, e.latlng.long)
     });
-    let msg = '<b>'+ text + '<b>'+ '<br><br>'+' '+ comment
-    marker.bindPopup(msg);
+    marker.bindPopup(text);
 }
-
+/** call the google street view api and to add image on the DOM */
 function addGoogleStreetView(lat, long){
     $.ajax({
         url : `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${lat},${long}
@@ -93,25 +84,18 @@ function addGoogleStreetView(lat, long){
         }
     })
 }
-
-
-
-
-/**
-
-var circle = L.circle([48.8737815, 2.3501649], {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5,
-    radius: 500
-}).addTo(mymap);
-
-circle.bindPopup("I am a circle.").openPopup();
-
+/** get position when user click on the map */
 function onMapClick(e) {
-    alert("You clicked the map at " + e.latlng.lat);
+    document.getElementById('lat').value=e.latlng.lat;
+    document.getElementById('long').value=e.latlng.lng;
 }
 
-//mymap.on('click', onMapClick);
+/** add restaurant on the map */
+function addRestau (lat, long, text) { 
+    if((lat === '') || (long === '')) return alert("bad input")
 
-**/
+    var marker = L.marker([lat, long]).addTo(mymap).on('click', (e) =>{
+        addGoogleStreetView(e.latlng.lat, e.latlng.long) 
+    });
+    marker.bindPopup(text);
+}
