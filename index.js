@@ -1,10 +1,40 @@
+/**
+ * [Restaurant description]
+ */
+class Restaurant {
+    constructor(data){
+      this.DOM      = document.createElement('div');
+      this.name     = data.restaurantName;
+      this.lat      = data.lat;
+      this.long     = data.long;
+      this.avering  = null;
+      this.score    = 0;
+      this.comments = [];
+  
+      for (let index = 0; index < data.ratings.length; index++) {
+          this.score += data.ratings[index].stars
+          this.avering = this.score / data.ratings.length
+          this.comments.push(data.ratings[index].comment)
+      }
+  
+      document.ul.appendChild(this.DOM)
+      this.render()
+    }
+  
+    render() {
+      return this.DOM.innerHTML = `<li class='list-group-item'>name ${this.name} --- ${this.avering}</li>` ;
+    }
+  }
+  
+
+
+
 $(function(){
 
     let myLatitide = null;
     let myLongitude = null;
     let mymap = null;
-    let restau = [];
-    let googleToken = 'AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew'
+    let googleToken = 'AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew';
     
 
     if ("geolocation" in navigator) {
@@ -13,9 +43,8 @@ $(function(){
             myLatitide = position.coords.latitude;
             myLongitude = position.coords.longitude;
             mapDisplay(myLatitide, myLongitude);
-        });
-    
-    } else {
+            })
+        } else {
         /* la géolocalisation n'est pas disponible */
         alert("la géolocalisation n'est pas disponible")
     }
@@ -44,27 +73,14 @@ function mapDisplay(lat, long , data=[]){
         url: 'data.json',
         type: "GET",
         dataType: "json",
-        success: function (jdata) {
-           restau = jdata
-           var i = 0;
-           let star_1 = new Array();
-           let count = []
-           restau.forEach(e =>{
-                let = element =  $('<li></li>').attr('class', 'list-group-item')
-                $('ul').append(element)
-                $('li')[i].innerText = e.restaurantName
-                e.ratings.forEach(i =>{
-                    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-                    star_1.push(i.stars)
-                    count.push(star_1.reduce(reducer))
-                    alert('reducer ' +count)
-                    addMarker(e.lat, e.long, e.restaurantName, i.comment)
-                })
-                i++;
-        })
+        success: function (data) {
+            for (let index = 0; index < data.length; index++) {
+                new Restaurant(data[index]);
+                addMarker(Restaurant.lat, Restaurant.long, Restaurant.name, Restaurant.comments)
+            }
         },
         error : function(resultat, statut, erreur){
-          alert('Error statut : '+ statut + ' '+ erreur)
+          alert('Error statut : '+ statut +' '+ erreur)
         }
   
     });
@@ -75,7 +91,7 @@ function addMarker (lat, long, text, comment){
     var marker = L.marker([lat, long]).addTo(mymap).on('click', (e) =>{
         addGoogleStreetView(e.latlng.lat, e.latlng.long)
     });
-    let msg = '<b>'+ text + '<b>'+ '<br><br>'+' '+ comment
+    let msg = '<b>'+ text + '<b>'+'<br><br>'+' '+ comment
     marker.bindPopup(msg);
 }
 
@@ -94,9 +110,6 @@ function addGoogleStreetView(lat, long){
     })
 }
 
-
-
-
 /**
 
 var circle = L.circle([48.8737815, 2.3501649], {
@@ -113,5 +126,25 @@ function onMapClick(e) {
 }
 
 //mymap.on('click', onMapClick);
+
+
+
+restau = jdata
+           var i = 0;
+           let star_1 = new Array();
+           let count = []
+           restau.forEach(e =>{
+                let = element =  $('<li></li>').attr('class', 'list-group-item')
+                $('ul').append(element)
+                $('li')[i].innerText = e.restaurantName
+                e.ratings.forEach(i =>{
+                    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+                    star_1.push(i.stars)
+                    count.push(star_1.reduce(reducer))
+                    alert('reducer ' +count)
+                    addMarker(e.lat, e.long, e.restaurantName, i.comment)
+                })
+                i++;
+        })
 
 **/

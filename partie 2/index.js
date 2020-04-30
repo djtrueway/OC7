@@ -1,9 +1,33 @@
+/**
+ * [Restaurant description]
+ */
+class Restaurant {
+    constructor(data){
+      this.DOM      = document.createElement('div');
+      this.name     = data.restaurantName;
+      this.lat      = data.lat;
+      this.long     = data.long;
+      this.avering  = null;
+      this.score    = 0;
+      this.comments = [];
+  
+      for (let index = 0; index < data.ratings.length; index++) {
+          this.score += data.ratings[index].stars
+          this.avering = this.score / data.ratings.length
+          this.comments.push(data.ratings[index].comment)
+      }
+
+    }
+
+}
+
+
 $(function(){
 
     let myLatitide = null;
     let myLongitude = null;
     let mymap = null;
-    let Restau = [];
+    let restaurantList = [];
     let googleToken = 'AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew'
     
 
@@ -48,11 +72,11 @@ function mapDisplay(lat, long , data=[]){
         url: 'data.json',
         type: "GET",
         dataType: "json",
-        success: function (jdata) {
-           Restau = jdata
-           Restau.forEach(e =>{
-                addMarker(e.lat, e.long, e.restaurantName)
-        })
+        success: function (data) {
+            for (let index = 0; index < data.length; index++) {
+                restaurantList.push(new Restaurant(data[index]));
+                addMarker(Restaurant.lat, Restaurant.long, Restaurant.name, Restaurant.comments)
+            }
         },
         error : function(resultat, statut, erreur){
           alert('Error statut : '+ statut + ' '+ erreur)
@@ -62,13 +86,20 @@ function mapDisplay(lat, long , data=[]){
 
     mymap.on('click', onMapClick);
 }
-/** add marker to the map */
-function addMarker (lat, long, text){
+
+/**
+ * [addMarker description]
+ * @params lat , long, name, comments
+ * @return  {[type]}  [return description]
+ */
+function addMarker (lat, long, nom, comment){
     var marker = L.marker([lat, long]).addTo(mymap).on('click', (e) =>{
         addGoogleStreetView(e.latlng.lat, e.latlng.long)
     });
-    marker.bindPopup(text);
+    let msg = '<b>'+ nom +'<b>'+'<br><br>'+' '+ comment
+    marker.bindPopup(msg);
 }
+
 /** call the google street view api and to add image on the DOM */
 function addGoogleStreetView(lat, long){
     $.ajax({
@@ -91,11 +122,21 @@ function onMapClick(e) {
 }
 
 /** add restaurant on the map */
-function addRestau (lat, long, text) { 
-    if((lat === '') || (long === '')) return alert("bad input")
+function addRestau (lat, long, nom, score, comment) { 
+    if((lat === '') && (long === '') && (nom === '') &&(score === '') && (comment === '')) return alert("bad input")
 
-    var marker = L.marker([lat, long]).addTo(mymap).on('click', (e) =>{
-        addGoogleStreetView(e.latlng.lat, e.latlng.long) 
-    });
-    marker.bindPopup(text);
+    data = {
+        "restaurantName": nom,
+        "lat": lat,
+        "long":long,
+        "ratings":[
+           {
+              "stars":score,
+              "comment": comment
+           }
+        ]
+     }
+    let newRestaurant = new Restaurant(data) 
+    addMarker(Restaurant.lat, Restaurant.long, Restaurant.name, Restaurant.comments)
+    restaurantList.push(newRestaurant)
 }
