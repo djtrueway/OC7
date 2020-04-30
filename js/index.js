@@ -1,34 +1,6 @@
 /**
  * [Restaurant description]
  */
-class Restaurant {
-    constructor(data){
-      this.DOM      = document.createElement('div');
-      this.name     = data.restaurantName;
-      this.lat      = data.lat;
-      this.long     = data.long;
-      this.avering  = null;
-      this.score    = 0;
-      this.comments = [];
-  
-      for (let index = 0; index < data.ratings.length; index++) {
-          this.score += data.ratings[index].stars
-          this.avering = this.score / data.ratings.length
-          this.comments.push(data.ratings[index].comment)
-      }
-  
-      document.ul.appendChild(this.DOM)
-      this.render()
-    }
-  
-    render() {
-      return this.DOM.innerHTML = `<li class='list-group-item'>name ${this.name} --- ${this.avering}</li>` ;
-    }
-  }
-  
-
-
-
 $(function(){
 
     let myLatitide = null;
@@ -70,13 +42,13 @@ function mapDisplay(lat, long , data=[]){
     })
 
     $.ajax({
-        url: 'data.json',
+        url: './data.json',
         type: "GET",
         dataType: "json",
         success: function (data) {
             for (let index = 0; index < data.length; index++) {
-                new Restaurant(data[index]);
-                addMarker(Restaurant.lat, Restaurant.long, Restaurant.name, Restaurant.comments)
+                let tmp = new Restaurant(data[index]);
+                addMarker(tmp.lat, tmp.long, tmp.name, tmp.comments)
             }
         },
         error : function(resultat, statut, erreur){

@@ -1,0 +1,23 @@
+{
+  "name": "peterson-p7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node node_modules/http-server/bin/http-server "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djtrueway/OC7.git"
+  },
+  "author": "Peterson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djtrueway/OC7/issues"
+  },
+  "homepage": "https://github.com/djtrueway/OC7#readme",
+  "devDependencies": {
+    "http-server": "^0.12.3"
+  }
+}
