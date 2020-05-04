@@ -3,34 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.css" >
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css" >
+    <link rel="stylesheet" href="SimpleStarRating.css">
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""
     />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin="">
+    </script>
     <script src="./jquery/jquery.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous" defer></script>
-    <script src="./bootstrap/js/bootstrap.min.js" defer></script>
-    <script src="./js/index.js" defer></script>
-    <script src="./js/restaurant.js" defer></script>
-    <link rel="stylesheet" href="./style.css" >
+    <script src="/bootstrap/js/bootstrap.min.js" defer></script>
+    <script src='/js/index.js' defer></script>
+    <script src="/js/restaurant.js" defer></script>
+    <script src="SimpleStarRating.js"></script>
+    <link rel="stylesheet" href="/style.css" >
     <title>OC7</title>
 </head>
 <body>
     <!-- Image and text -->
     <nav class="navbar navbar-light bg-primary">
     <a class="navbar-brand text-light" href="#">
-      <img src="./docs/4.4/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
       Restaurant a paris
     </a>
   </nav>
-  <div class="container">
+  <div class="container-fluid">
       <div class="row">
           <div class="col-md-8">
               <div id="map" class="mt-4"></div>
           </div>
           <div class="col-md-3">
+            <div class="form-inline mt-4 ">
+                <div class="input-group mb-2 mr-sm-2" >
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                  </div>
+                  <input type="text" class="form-control col" id="inlineFormInputGroupUsername2" placeholder="Username">
+                </div>
+            </div>
               <div id="restaurant">
                 <div class="card mt-4" style="width: 18rem;">
                     <div class="card-header">
@@ -40,15 +54,22 @@
                     </ul>
                 </div>
               </div>
+
+              <div class="form-group" >
+                <div class="form-inline mt-3">
+                    <input class="form-control col-6" id="lat" placeholder="lat">
+                    <input class="form-control col-6" id="long" placeholder="long">
+                </div>
+                <input class="form-control mt-3" id='name' placeholder="name">
+                <textarea col='6' class="form-control mt-3" id="avis"></textarea>
+                <button class="btn btn-primary mt-3">Ajoute restaurant</button>
+            </div>
           </div>
       </div>
   </div>
     <section></section>
 </body>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-    crossorigin="">
-    </script>
+   
    <!-- <script
      src="https://code.jquery.com/jquery-3.4.1.min.js"
      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

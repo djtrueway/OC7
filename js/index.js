@@ -16,6 +16,9 @@ $(function(){
             myLongitude = position.coords.longitude;
             mapDisplay(myLatitide, myLongitude);
             })
+            $('button').click(function(){
+                addRestau($('#lat').val(), $('#long').val(),$('#name').val())
+            })
         } else {
         /* la géolocalisation n'est pas disponible */
         alert("la géolocalisation n'est pas disponible")
@@ -26,7 +29,7 @@ $(function(){
 
 function mapDisplay(lat, long , data=[]){
 
-    mymap = L.map('map').setView([lat, long], 15);
+    mymap = L.map('map').setView([lat, long], 2);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGp0cnVld2F5IiwiYSI6ImNrODRvbHBqcTAxbXUzZnBleXR0cnQ0d2oifQ.PkWU4kpbQBnHCBkmTNHYtA', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -48,7 +51,8 @@ function mapDisplay(lat, long , data=[]){
         success: function (data) {
             for (let index = 0; index < data.length; index++) {
                 let tmp = new Restaurant(data[index]);
-                addMarker(tmp.lat, tmp.long, tmp.name, tmp.comments)
+                //addMarker(tmp.lat, tmp.long, tmp.name, tmp.comments)
+                showStart()
             }
         },
         error : function(resultat, statut, erreur){
@@ -56,14 +60,16 @@ function mapDisplay(lat, long , data=[]){
         }
   
     });
+
+    mymap.on('click', onMapClick);
    
 }
 
-function addMarker (lat, long, text, comment){
+function addMarker (lat, long, text){
     var marker = L.marker([lat, long]).addTo(mymap).on('click', (e) =>{
         addGoogleStreetView(e.latlng.lat, e.latlng.long)
     });
-    let msg = '<b>'+ text + '<b>'+'<br><br>'+' '+ comment
+    let msg = '<b>'+ text + '<b>'+'<br><br>'
     marker.bindPopup(msg);
 }
 
@@ -82,41 +88,39 @@ function addGoogleStreetView(lat, long){
     })
 }
 
-/**
+window.addGoogleStreetView = addGoogleStreetView
 
-var circle = L.circle([48.8737815, 2.3501649], {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5,
-    radius: 500
-}).addTo(mymap);
 
-circle.bindPopup("I am a circle.").openPopup();
-
+/** get position when user click on the map */
 function onMapClick(e) {
-    alert("You clicked the map at " + e.latlng.lat);
+    document.getElementById('lat').value=e.latlng.lat;
+    document.getElementById('long').value=e.latlng.lng;
 }
 
-//mymap.on('click', onMapClick);
+/** add restaurant on the map */
+function addRestau (lat, long, nom, score=1, comment='new restaurant') { 
+    if((lat === '') && (long === '') && (nom === '')) return alert("bad input")
+
+    data = {
+        "restaurantName": nom,
+        "lat": lat,
+        "long":long,
+        "ratings":[
+           {
+              "stars":score,
+              "comment": comment
+           }
+        ]
+     }
+    let newRestaurant = new Restaurant(data) 
+}
 
 
+function showStart(){
+    var ratings = document.getElementsByClassName('rating');
+    alert(ratings.length)
+    for (var i = 0; i < ratings.length; i++) {
+        var r = new SimpleStarRating(ratings[i]);
 
-restau = jdata
-           var i = 0;
-           let star_1 = new Array();
-           let count = []
-           restau.forEach(e =>{
-                let = element =  $('<li></li>').attr('class', 'list-group-item')
-                $('ul').append(element)
-                $('li')[i].innerText = e.restaurantName
-                e.ratings.forEach(i =>{
-                    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-                    star_1.push(i.stars)
-                    count.push(star_1.reduce(reducer))
-                    alert('reducer ' +count)
-                    addMarker(e.lat, e.long, e.restaurantName, i.comment)
-                })
-                i++;
-        })
-
-**/
+    }
+}
