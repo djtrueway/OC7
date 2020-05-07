@@ -52,7 +52,7 @@ function mapDisplay(lat, long , data=[]){
             for (let index = 0; index < data.length; index++) {
                 let tmp = new Restaurant(data[index]);
                 //addMarker(tmp.lat, tmp.long, tmp.name, tmp.comments)
-                showStart()
+                // showStart()
             }
         },
         error : function(resultat, statut, erreur){
@@ -116,11 +116,11 @@ function addRestau (lat, long, nom, score=1, comment='new restaurant') {
 }
 
 
-function showStart(){
-    var ratings = document.getElementsByClassName('rating');
-    alert(ratings.length)
-    for (var i = 0; i < ratings.length; i++) {
-        var r = new SimpleStarRating(ratings[i]);
+// function showStart(){
+//     var ratings = document.getElementsByClassName('rating');
+//     alert(ratings.length)
+//     for (var i = 0; i < ratings.length; i++) {
+//         var r = new SimpleStarRating(ratings[i]);
 
-    }
-}
+//     }
+// }
