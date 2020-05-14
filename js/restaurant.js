@@ -7,7 +7,17 @@ class Restaurant {
       this.name     = data.restaurantName;
       this.lat      = data.lat;
       this.long     = data.long;
-      this.comments = data.ratings;
+      var dataComments = sessionStorage.getItem(`comment-${this.name}`);
+      console.log(dataComments)
+      if(dataComments === null){
+        console.log('fff1')
+        this.comments = data.ratings;
+        dataComments = sessionStorage.setItem(`comment-${this.name}`, JSON.stringify(data.ratings));
+      }else{
+        console.log('fff2')
+        this.comments = JSON.parse(dataComments);
+      }
+      
       this.average();
 
       this.viewDetails = false;
@@ -21,9 +31,9 @@ class Restaurant {
       if(this.userRating !== null) return;
       console.log("wxcwcwxc", e.detail)
       this.starClick(e)
+      //this.addComment(e)
       this.DOMstar.innerHTML += this.renderAddComment(); 
       }.bind(this));
-
 
       this.userRating = null;
     }
@@ -42,8 +52,8 @@ class Restaurant {
     }
 
     starClick(e){
-     
-     
+      this.stars = e.detail
+      return
     }
 
     newRating(event){     
@@ -75,24 +85,36 @@ class Restaurant {
     }
 
     addComment(){
+      
+      const stars = this.stars
+      const comment = document.querySelector(`#${this.name}Comment`).value;
+      if(comment === ''){
+        alert('SVP AJOUTE UN COMMENNTAIRE')
+        return
+      }
+      console.log('c :' + comment + ' s :' +stars)
+      
       let rates = {
-        "stars": $('#rates').val(),
-        "comment": $('#comments').val()
+        "stars": stars,
+        "comment": comment
       }
       this.comments.push(rates)
-      this.renderRatings()
+      sessionStorage.setItem(`comment-${this.name}`, JSON.stringify(this.comments));
+      this.renderComment()
+      document.querySelector(`#${this.name}Comment`).value = '';
+      this.stars = '';
+      return ;
     }
 
     renderAddComment(){
       return  `
           <div onclick="event.stopPropagation();">
-          <input name="commentaires" id='comments' placeholder="ajouter un commentaire">
+          <input name="commentaires" class='form-control form-control-sm' id='${this.name}Comment' placeholder="ajouter un commentaire">
           </div>
-          <button onclick="event.stopPropagation(); ">ajoute un commentaire</button>
+          <button class='btn btn-sm btn-primary mt-1' onclick="event.stopPropagation();window.${this.name}.addComment() ">ajoute un commentaire</button>
         `;
        
     }
-
 
     renderRatings(){
       let content = "";

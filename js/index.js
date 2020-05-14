@@ -17,7 +17,7 @@ $(function(){
             mapDisplay(myLatitide, myLongitude);
             })
             $('button').click(function(){
-                addRestau($('#lat').val(), $('#long').val(),$('#name').val())
+                addRestau($('#lat').val(), $('#long').val(), $('#nom').val(), $('#score').val(), $('#add_comment').val() )
             })
         } else {
         /* la géolocalisation n'est pas disponible */
@@ -98,7 +98,7 @@ function onMapClick(e) {
 }
 
 /** add restaurant on the map */
-function addRestau (lat, long, nom, score=1, comment='new restaurant') { 
+function addRestau (lat, long, nom, score, comment) { 
     if((lat === '') && (long === '') && (nom === '')) return alert("bad input")
 
     data = {
@@ -112,15 +112,11 @@ function addRestau (lat, long, nom, score=1, comment='new restaurant') {
            }
         ]
      }
-    let newRestaurant = new Restaurant(data) 
+    let newRestaurant = new Restaurant(data) ;
+
+    $('#lat').val('');
+    $('#long').val('');
+    $('#nom').val('');
+    $('#score').val('');
+    $('#add_comment').val('');
 }
-
-
-// function showStart(){
-//     var ratings = document.getElementsByClassName('rating');
-//     alert(ratings.length)
-//     for (var i = 0; i < ratings.length; i++) {
-//         var r = new SimpleStarRating(ratings[i]);
-
-//     }
-// }

@@ -10,6 +10,10 @@
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""
     />
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+     crossorigin="anonymous">
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin="">
@@ -39,10 +43,10 @@
           <div class="col-md-3">
             <div class="form-inline mt-4 ">
                 <div class="input-group mb-2 mr-sm-2" >
+                  <input type="text" class="form-control" id="search" placeholder="Search a restaurant">
                   <div class="input-group-prepend">
-                    <div class="input-group-text">@</div>
+                    <div class="input-group-text"><button class="btn btn-primary"> <i class="fa fa-search"> </i></button></div>
                   </div>
-                  <input type="text" class="form-control col" id="inlineFormInputGroupUsername2" placeholder="Username">
                 </div>
             </div>
               <div id="restaurant">
@@ -57,11 +61,12 @@
 
               <div class="form-group" >
                 <div class="form-inline mt-3">
-                    <input class="form-control col-6" id="lat" placeholder="lat">
-                    <input class="form-control col-6" id="long" placeholder="long">
+                    <input class="form-control form-control-sm col-6" id="lat" placeholder="lat">
+                    <input class="form-control form-control-sm col-6" id="long" placeholder="long">
                 </div>
-                <input class="form-control mt-3" id='name' placeholder="name">
-                <textarea col='6' class="form-control mt-3" id="avis"></textarea>
+                <input class="form-control mt-3" id='nom' placeholder="name">
+                <input type="number" class="form-control form-control-sm  mt-3" id='score' placeholder="Score">
+                <textarea col='6' id="add_comment" class="form-control mt-3" id="avis"></textarea>
                 <button class="btn btn-primary mt-3">Ajoute restaurant</button>
             </div>
           </div>
