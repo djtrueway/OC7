@@ -1,5 +1,6 @@
 class Restaurant {
     constructor(data){
+      window[data.restaurantName] = this;
       this.DOM      = document.createElement('li');
       this.DOMstar = document.createElement("stars");
       this.DOMcomments = document.createElement("comments");
@@ -10,18 +11,20 @@ class Restaurant {
       this.average();
 
       this.viewDetails = false;
-      // this.render();
-      //this.showStart()
-      this.addMarker(this.lat, this.long, this.name);
+      this.addMarker();
       this.initialRender();
       SimpleStarRating(this.DOMstar);
+
       this.DOMstar.addEventListener('rate', function (e) {
         console.log(e);
 
       if(this.userRating !== null) return;
       console.log("wxcwcwxc", e.detail)
+      this.starClick(e)
       this.DOMstar.innerHTML += this.renderAddComment(); 
       }.bind(this));
+
+
       this.userRating = null;
     }
 
@@ -38,8 +41,9 @@ class Restaurant {
       this.DOM.appendChild(this.DOMcomments);
     }
 
-    starClick(event){
-      event.stopPropagation();
+    starClick(e){
+     
+     
     }
 
     newRating(event){     
@@ -70,14 +74,6 @@ class Restaurant {
       this.DOMcomments.innerHTML =  content;
     }
 
-    renderAddComment(){
-      return `
-          <div onclick="event.stopPropagation();">
-          <input name="commentaires" id='comments' placeholder="ajouter un commentaire">
-          <button >ajoute un commentaire</button>
-          </div>
-        `;
-    }
     addComment(){
       let rates = {
         "stars": $('#rates').val(),
@@ -85,6 +81,16 @@ class Restaurant {
       }
       this.comments.push(rates)
       this.renderRatings()
+    }
+
+    renderAddComment(){
+      return  `
+          <div onclick="event.stopPropagation();">
+          <input name="commentaires" id='comments' placeholder="ajouter un commentaire">
+          </div>
+          <button onclick="event.stopPropagation(); ">ajoute un commentaire</button>
+        `;
+       
     }
 
 
@@ -106,7 +112,7 @@ class Restaurant {
       this.renderComment();
     }
 
-    addMarker (lat, long, name, ){
+    addMarker ( ){
       var marker = L.marker([this.lat, this.long]).addTo(mymap).on('click', (e) =>{
          // alert('make ajax request to the api')
           window.addGoogleStreetView(this.lat, this.long)
@@ -114,14 +120,4 @@ class Restaurant {
       let msg = '<b>'+ this.name + '<b>'+'<br><br>'
       marker.bindPopup(msg);
     }
-
-    showStars(){
-    var ratings = document.getElementsByClassName('rating');
-    alert(ratings.length)
-    for (var i = 0; i < ratings.length; i++) {
-        var r = new SimpleStarRating(ratings[i]);
-
-    }
-    window.test = SimpleStarRating(ratings[i]);
-}
   }
