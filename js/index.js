@@ -1,8 +1,12 @@
 /**
  * [Restaurant description]
  */
-$(function(){
 
+const dataManager = new DataHandler("ocP7klqsLql");
+dataManager.importData("./data.json");
+
+
+function initmap(){
     let myLatitide = null;
     let myLongitude = null;
     let mymap = null;
@@ -22,8 +26,8 @@ $(function(){
         } else {
         /* la géolocalisation n'est pas disponible */
         alert("la géolocalisation n'est pas disponible")
-    }
-})
+    }    
+}
 
 /** display map and user position  */
 
@@ -44,23 +48,9 @@ function mapDisplay(lat, long , data=[]){
         addMarker(e.lat, e.long)
     })
 
-    $.ajax({
-        url: './data.json',
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            for (let index = 0; index < data.length; index++) {
-                let tmp = new Restaurant(data[index]);
-                //addMarker(tmp.lat, tmp.long, tmp.name, tmp.comments)
-                // showStart()
-            }
-        },
-        error : function(resultat, statut, erreur){
-          alert('Error statut : '+ statut +' '+ erreur)
-        }
-  
-    });
-
+    for (let index = 0; index < dataManager.data.length; index++) {
+        let tmp = new Restaurant(dataManager.data[index]);
+    }
     mymap.on('click', onMapClick);
    
 }

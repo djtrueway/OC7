@@ -7,17 +7,20 @@ class Restaurant {
       this.name     = data.restaurantName;
       this.lat      = data.lat;
       this.long     = data.long;
-      var dataComments = sessionStorage.getItem(`comment-${this.name}`);
-      console.log(dataComments)
-      if(dataComments === null){
-        console.log('fff1')
-        this.comments = data.ratings;
-        dataComments = sessionStorage.setItem(`comment-${this.name}`, JSON.stringify(data.ratings));
-      }else{
-        console.log('fff2')
-        this.comments = JSON.parse(dataComments);
-      }
+      // var dataComments = sessionStorage.getItem(`comment-${this.name}`);
+      // console.log(dataComments)
+      // if(dataComments === null){
+      //   console.log('fff1')
+      //   this.comments = data.ratings;
+      //   dataComments = sessionStorage.setItem(`comment-${this.name}`, JSON.stringify(data.ratings));
+      // }else{
+      //   console.log('fff2')
+      //   this.comments = JSON.parse(dataComments);
+      // }
       
+      this.comments = dataManager.getEvaluation(this.name);
+
+
       this.average();
 
       this.viewDetails = false;
@@ -91,15 +94,14 @@ class Restaurant {
       if(comment === ''){
         alert('SVP AJOUTE UN COMMENNTAIRE')
         return
-      }
-      console.log('c :' + comment + ' s :' +stars)
-      
+      }      
       let rates = {
         "stars": stars,
         "comment": comment
       }
+      console.log("----",this.comments);
       this.comments.push(rates)
-      sessionStorage.setItem(`comment-${this.name}`, JSON.stringify(this.comments));
+      // dataManager.addComment(this.name, this.comments);
       this.renderComment()
       document.querySelector(`#${this.name}Comment`).value = '';
       this.stars = '';
