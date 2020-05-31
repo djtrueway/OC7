@@ -67,7 +67,7 @@ function addGoogleStreetView(lat, long){
     $.ajax({
         url : `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${lat},${long}
         &fov=80&heading=70&pitch=0
-        &key=AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew`,
+        &key=AIzaSyD6wzc3Dt0s52UvU58e_iScfPAsc0qjlsY&signature=wBRD9N8gsy7COpHeYN-zW_Z3e_8=`,
         type : 'GET',
         success : function(data){
             alert(data)

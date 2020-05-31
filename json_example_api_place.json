@@ -1,0 +1,74 @@
+{
+    "candidates" : [
+       {
+          "formatted_address" : "140 George St, The Rocks NSW 2000, Australie",
+          "geometry" : {
+             "location" : {
+                "lat" : -33.8599358,
+                "lng" : 151.2090295
+             },
+             "viewport" : {
+                "northeast" : {
+                   "lat" : -33.85824377010728,
+                   "lng" : 151.2104386798927
+                },
+                "southwest" : {
+                   "lat" : -33.86094342989272,
+                   "lng" : 151.2077390201073
+                }
+             }
+          },
+          "name" : "Museum of Contemporary Art Australia",
+          "photos" : [
+             {
+                "height" : 3278,
+                "html_attributions" : [
+                   "\u003ca href=\"https://maps.google.com/maps/contrib/104790014239029387558\"\u003eMuseum of Contemporary Art Australia\u003c/a\u003e"
+                ],
+                "photo_reference" : "CmRaAAAAxsjmzK-iyUpDVoDkovz7zYKBblBr8DgRZqGvbpbrejq3tASqaxD-kapNmKhBbIkYGLOJBwgzaj5wLZ8d-Gx8hBTp9jWaFgomDDaubxekR2D5He7GPKCHqrCrwAL-g2RmEhAAv3aDDhV-jEBf0Yus09dvGhQEIMGNRejNN7AL3gPtzALLjDcU4A",
+                "width" : 3543
+             }
+          ],
+          "rating" : 4.4
+       }
+    ],
+    "status" : "OK"
+ },
+
+
+ {
+    "candidates" : [
+       {
+          "formatted_address" : "Port-au-Prince, Haïti",
+          "geometry" : {
+             "location" : {
+                "lat" : 18.5363809,
+                "lng" : -72.3345604
+             },
+             "viewport" : {
+                "northeast" : {
+                   "lat" : 18.53778522989272,
+                   "lng" : -72.33319957010728
+                },
+                "southwest" : {
+                   "lat" : 18.53508557010728,
+                   "lng" : -72.33589922989273
+                }
+             }
+          },
+          "name" : "Alvarez Resto Club",
+          "photos" : [
+             {
+                "height" : 2448,
+                "html_attributions" : [
+                   "\u003ca href=\"https://maps.google.com/maps/contrib/101042222622606068615\"\u003eJean Max Dumond\u003c/a\u003e"
+                ],
+                "photo_reference" : "CmRaAAAAQaHUuOdVHK6fgBP2ZJJ2zJjw1MH4_gHRdnD6kQv3zPtd7dnu21q6SGzknRl9ilTePncdgW_dqqa9ZEcnNCNvUBANErm_K0JwFSPk3QEC5-LqjiEYrfsTryeB6dR_x5oCEhAGDKt_gSGkDpSldQ35UUIxGhQsmYjVgtt_pGc32VstUJ6-UHu4YA",
+                "width" : 3264
+             }
+          ],
+          "rating" : 3.1
+       }
+    ],
+    "status" : "OK"
+ }
