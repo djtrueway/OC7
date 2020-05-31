@@ -16,8 +16,11 @@ $(function(){
             myLongitude = position.coords.longitude;
             mapDisplay(myLatitide, myLongitude);
             })
-            $('button').click(function(){
+            $('#button_add').click(function(){
                 addRestau($('#lat').val(), $('#long').val(), $('#nom').val(), $('#score').val(), $('#add_comment').val() )
+            });
+            $('#search_restau').click(function(){
+                addRestauFromGoogleMapApi()
             })
         } else {
         /* la géolocalisation n'est pas disponible */
@@ -119,4 +122,30 @@ function addRestau (lat, long, nom, score, comment) {
     $('#nom').val('');
     $('#score').val('');
     $('#add_comment').val('');
+}
+/**
+ * add restaurants from google map api 
+ */
+function addRestauFromGoogleMapApi(){
+    if($('#search').val() === ''){
+        $('.alert').addClass("alert alert-warning alert-dismissible fade show")
+        return;
+    }else{
+        $('.alert').removeClass("alert alert-warning alert-dismissible fade show")
+        
+    }
+    let input =  $('#search').val()
+
+    $.ajax({
+        url : './search.json',
+        type : 'GET',
+        dataType: "json",
+        success : function(data){
+            console.log(data)
+        },
+        error : function(resultat, statut, erreur){
+            alert('Error statut : '+ statut + ' '+ erreur)
+        }
+    })
+
 }
