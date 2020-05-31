@@ -32,7 +32,7 @@ $(function(){
 
 function mapDisplay(lat, long , data=[]){
 
-    mymap = L.map('map').setView([lat, long], 2);
+    mymap = L.map('map').setView([lat, long], 10);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGp0cnVld2F5IiwiYSI6ImNrODRvbHBqcTAxbXUzZnBleXR0cnQ0d2oifQ.PkWU4kpbQBnHCBkmTNHYtA', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -131,8 +131,7 @@ function addRestauFromGoogleMapApi(){
         $('.alert').addClass("alert alert-warning alert-dismissible fade show")
         return;
     }else{
-        $('.alert').removeClass("alert alert-warning alert-dismissible fade show")
-        
+        $('.alert').removeClass("alert alert-warning alert-dismissible fade show").addClass('alert alert-warning alert-dismissible fade hide')
     }
     let input =  $('#search').val()
 
@@ -142,10 +141,32 @@ function addRestauFromGoogleMapApi(){
         dataType: "json",
         success : function(data){
             console.log(data)
+            for (let index = 0; index < data.results.length; index++) {
+                const element = data.results[index];
+                createRestau(element)
+            }
+           
         },
         error : function(resultat, statut, erreur){
             alert('Error statut : '+ statut + ' '+ erreur)
         }
     })
+}
 
+function createRestau(datas){
+    console.log(datas)
+
+    data = {
+        "restaurantName": datas.name,
+        "lat": datas.geometry.location.lat,
+        "long":datas.geometry.location.lng,
+        "ratings":[
+           {
+              "stars":datas.rating,
+              "comment": ''
+           }
+        ]
+     }
+    let tmp = new Restaurant(data);
+    return tmp;
 }
