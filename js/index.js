@@ -3,10 +3,13 @@
  */
 $(function(){
 
+    $('.alert').hide()
+
+
     let myLatitide = null;
     let myLongitude = null;
-    let mymap = null;
-    let googleToken = 'AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew';
+    //let mymap = null;
+    //let googleToken = 'AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew';
     
 
     if ("geolocation" in navigator) {
@@ -135,8 +138,26 @@ function addRestauFromGoogleMapApi(){
     }
     let input =  $('#search').val()
 
+    input = input.split(' ').join('+');
+    console.log(input)
+
+    let output = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input}&key=AIzaSyD6wzc3Dt0s52UvU58e_iScfPAsc0qjlsY&signature=wBRD9N8gsy7COpHeYN-zW_Z3e_8=`
+    console.log(output)
+
+    $(document).ajaxStart(function () {
+        // Show image container
+        $('#search_restau').hide();
+        $(".spinner-border").show();
+      });
+      $(document).ajaxComplete(function () {
+        // Hide image container
+        $(".spinner-border").hide();
+        $('#search_restau').show();
+      });
+
+
     $.ajax({
-        url : './search.json',
+        url : output,
         type : 'GET',
         dataType: "json",
         success : function(data){
@@ -150,7 +171,8 @@ function addRestauFromGoogleMapApi(){
         error : function(resultat, statut, erreur){
             alert('Error statut : '+ statut + ' '+ erreur)
         }
-    })
+    }) 
+
 }
 
 function createRestau(datas){
