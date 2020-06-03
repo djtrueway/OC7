@@ -1,6 +1,5 @@
 class Restaurant {
     constructor(data){
-      window[data.restaurantName] = this;
       this.DOM      = document.createElement('li');
       this.DOMstar = document.createElement("stars");
       this.DOMcomments = document.createElement("comments");
@@ -17,6 +16,13 @@ class Restaurant {
         console.log('fff2')
         this.comments = JSON.parse(dataComments);
       }
+
+      let method = data.restaurantName
+      method = method.split(' ').join('_')
+      method = method.split('&').join('_')
+      method = method.split("'").join('_')
+      method = method.split("-").join('_')
+      this.id = method
       
       this.average();
 
@@ -36,6 +42,9 @@ class Restaurant {
       }.bind(this));
 
       this.userRating = null;
+      window[this.id] = this;
+
+      console.log(this.id)
     }
 
     initialRender(){
@@ -87,7 +96,7 @@ class Restaurant {
     addComment(){
       
       const stars = this.stars
-      const comment = document.querySelector(`#${this.name}Comment`).value;
+      const comment = document.querySelector(`#${this.id}Comment`).value;
       if(comment === ''){
         alert('SVP AJOUTE UN COMMENNTAIRE')
         return
@@ -101,7 +110,7 @@ class Restaurant {
       this.comments.push(rates)
       sessionStorage.setItem(`comment-${this.name}`, JSON.stringify(this.comments));
       this.renderComment()
-      document.querySelector(`#${this.name}Comment`).value = '';
+      document.querySelector(`#${this.id}Comment`).value = '';
       this.stars = '';
       return ;
     }
@@ -109,9 +118,9 @@ class Restaurant {
     renderAddComment(){
       return  `
           <div onclick="event.stopPropagation();">
-          <input name="commentaires" class='form-control form-control-sm' id='${this.name}Comment' placeholder="ajouter un commentaire">
+          <input name="commentaires" class='form-control form-control-sm' id='${this.id}Comment' placeholder="ajouter un commentaire">
           </div>
-          <button class='btn btn-sm btn-primary mt-1' onclick="event.stopPropagation();window.${this.name}.addComment() ">ajoute un commentaire</button>
+          <button class='btn btn-sm btn-primary mt-1' onclick="event.stopPropagation();window.${this.id}.addComment()">ajoute un commentaire</button>
         `;
        
     }

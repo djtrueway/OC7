@@ -141,7 +141,7 @@ function addRestauFromGoogleMapApi(){
     input = input.split(' ').join('+');
     console.log(input)
 
-    let output = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input}&key=AIzaSyD6wzc3Dt0s52UvU58e_iScfPAsc0qjlsY&signature=wBRD9N8gsy7COpHeYN-zW_Z3e_8=`
+    let output = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input}&key=`
     console.log(output)
 
     $(document).ajaxStart(function () {
