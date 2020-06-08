@@ -67,6 +67,7 @@ class Restaurant {
       let score = 0;
       for (let index = 0; index < this.comments.length; index++) {
         score += this.comments[index].stars;
+        console.log(this.comments[index].stars)
       }
       this.avering = score / this.comments.length;
     }
@@ -101,7 +102,8 @@ class Restaurant {
       }
       console.log("----",this.comments);
       this.comments.push(rates)
-      // dataManager.addComment(this.name, this.comments);
+      dataManager.addComment(this.name, rates);
+
       this.renderComment()
       document.querySelector(`#${this.name}Comment`).value = '';
       this.stars = '';

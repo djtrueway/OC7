@@ -1,6 +1,7 @@
 class DataHandler{
   constructor(prefix){
     this.data;
+    this.dataFormSession = {};
     this.prefix = prefix;
   }
 
@@ -8,8 +9,10 @@ class DataHandler{
 
   }
 
-  setSession(restaurant, comments){
-
+  addComment(restaurant, comments){
+    if(this.dataFormSession[restaurant] === undefined) this.dataFormSession[restaurant] = [];
+    this.dataFormSession[restaurant].push(comments);
+    sessionStorage.setItem(`${this.prefix}_data`, JSON.stringify(this.dataFormSession));
   }
 
   async importData(src){
@@ -26,17 +29,19 @@ class DataHandler{
   }
 
   importSession(){
-    let dataComments = sessionStorage.getItem(`${this.prefix}_data`);
-    dataComments     = JSON.parse(dataComments);
-    this.sessionComments = dataComments;
-    for( let [key, value] of Object.entries(this.data) ){
-      if (dataComments[value.restaurantName] !== undefined) {
-        this.data[key].ratings = {
-          ...this.data[key].ratings,
-          ...dataComments[value.restaurantName]
+    this.dataFormSession = sessionStorage.getItem(`${this.prefix}_data`);
+    this.dataFormSession = JSON.parse(this.dataFormSession);
+    if(this.dataFormSession !== null){
+      for( let [key, value] of Object.entries(this.data) ){
+        if (this.dataFormSession[value.restaurantName] !== undefined) {
+          this.data[key].ratings = this.data[key].ratings.concat(this.dataFormSession[value.restaurantName]);
         }
       }
+    }else{
+      this.dataFormSession = {}
     }
+  }
+    
 
 
 
@@ -59,21 +64,19 @@ class DataHandler{
  */
 
 
-
-
-
-
-
-
-
-  }
-
   getEvaluation(restaurant){
-
+    for(let [key, value] of Object.entries(this.data)){
+      if(value.restaurantName === restaurant){
+        console.log(value.ratings)
+        return value.ratings;
+      } 
+    }
   }
 
-  importFromGoogle(){
-    
+  async importFromGoogle(src){
+    const response = await fetch(src);
+    let dataGoogle = await response.json();
+    this.data = dataGoogle.results;
   }
 
 }

@@ -20,8 +20,11 @@ function initmap(){
             myLongitude = position.coords.longitude;
             mapDisplay(myLatitide, myLongitude);
             })
-            $('button').click(function(){
+            $('#button_add').click(function(){
                 addRestau($('#lat').val(), $('#long').val(), $('#nom').val(), $('#score').val(), $('#add_comment').val() )
+            })
+            $('#search_restau').click(function(){
+                addRestauFromGoogleMapApi()
             })
         } else {
         /* la géolocalisation n'est pas disponible */
@@ -44,7 +47,7 @@ function mapDisplay(lat, long , data=[]){
         accessToken: 'pk.eyJ1IjoiZGp0cnVld2F5IiwiYSI6ImNrODRvbHBqcTAxbXUzZnBleXR0cnQ0d2oifQ.PkWU4kpbQBnHCBkmTNHYtA'
     }).addTo(mymap);
     addMarker(lat, long, 'je suis peterson')
-    data.forEach(e =>{
+    data.forEach(e => {
         addMarker(e.lat, e.long)
     })
 
@@ -109,4 +112,48 @@ function addRestau (lat, long, nom, score, comment) {
     $('#nom').val('');
     $('#score').val('');
     $('#add_comment').val('');
+}
+
+function addRestauFromGoogleMapApi(){
+    if($('#search').val() === ''){
+        $('.alert').addClass("alert alert-warning alert-dismissible fade show")
+        return;
+    }else{
+        $('.alert').removeClass("alert alert-warning alert-dismissible fade show").addClass('alert alert-warning alert-dismissible fade hide')
+    }
+    let input =  $('#search').val()
+
+    input = input.split(' ').join('+');
+    console.log(input)
+
+    let output = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input}&key=`
+    console.log(output)
+
+    dataManager.importFromGoogle('./search.json')
+
+    console.log(dataManager.data)
+
+    for (let index = 0; index < dataManager.data.length; index++) {
+        const element = dataManager.data[index];
+        createRestau(element)
+    }
+
+} 
+
+function createRestau(datas){
+    console.log(datas)
+
+    data = {
+        "restaurantName": datas.name,
+        "lat": datas.geometry.location.lat,
+        "long":datas.geometry.location.lng,
+        "ratings":[
+           {
+              "stars":datas.rating,
+              "comment": ''
+           }
+        ]
+     }
+    let tmp = new Restaurant(data);
+    return tmp;
 }
