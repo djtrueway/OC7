@@ -4,52 +4,6 @@
     "results" : [
        {
           "business_status" : "OPERATIONAL",
-          "formatted_address" : "Delmas 31, Port-au-Prince, Haïti",
-          "geometry" : {
-             "location" : {
-                "lat" : 18.5497035,
-                "lng" : -72.3070003
-             },
-             "viewport" : {
-                "northeast" : {
-                   "lat" : 18.55110262989272,
-                   "lng" : -72.30573627010727
-                },
-                "southwest" : {
-                   "lat" : 18.54840297010728,
-                   "lng" : -72.30843592989272
-                }
-             }
-          },
-          "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-          "id" : "1672a992baf2136ef1694deb73d5e017db3bf943",
-          "name" : "Kokoye Bar & Grill",
-          "opening_hours" : {
-             "open_now" : true
-          },
-          "photos" : [
-             {
-                "height" : 1836,
-                "html_attributions" : [
-                   "\u003ca href=\"https://maps.google.com/maps/contrib/109345834431829041842\"\u003eKurt Jean-Charles\u003c/a\u003e"
-                ],
-                "photo_reference" : "CmRaAAAAACmi_gws00G_fCW2aPNRVuQfNFFAW8g2JJQ0hBneP-O3ayFvcVtxT57nS0rGnx45MSfp67grXXet1bDdug6M5tSdEQY2XCqEaL5-fewu1Vg668AdA9J9R6zY8EXl4zJfEhA7-vYBF2ROpaEJ7-b7JaNAGhRuJFeVj41F7EmrDns-U0uEI-bYaQ",
-                "width" : 3264
-             }
-          ],
-          "place_id" : "ChIJnVSW4r_nuY4R6SbuNe8ph6g",
-          "plus_code" : {
-             "compound_code" : "GMXV+V5 Port-au-Prince",
-             "global_code" : "77C9GMXV+V5"
-          },
-          "price_level" : 2,
-          "rating" : 3.7,
-          "reference" : "ChIJnVSW4r_nuY4R6SbuNe8ph6g",
-          "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
-          "user_ratings_total" : 1334
-       },
-       {
-          "business_status" : "OPERATIONAL",
           "formatted_address" : "30, Rue Goulard, Place Boyer - Petion Ville, Haïti, Port-au-Prince 6140, Haïti",
           "geometry" : {
              "location" : {
@@ -810,6 +764,52 @@
           "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
           "user_ratings_total" : 167
        },
+       {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "Delmas 31, Port-au-Prince, Haïti",
+         "geometry" : {
+            "location" : {
+               "lat" : 18.5497035,
+               "lng" : -72.3070003
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 18.55110262989272,
+                  "lng" : -72.30573627010727
+               },
+               "southwest" : {
+                  "lat" : 18.54840297010728,
+                  "lng" : -72.30843592989272
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "1672a992baf2136ef1694deb73d5e017db3bf943",
+         "name" : "Kokoye Bar & Grill",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 1836,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/109345834431829041842\"\u003eKurt Jean-Charles\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAACmi_gws00G_fCW2aPNRVuQfNFFAW8g2JJQ0hBneP-O3ayFvcVtxT57nS0rGnx45MSfp67grXXet1bDdug6M5tSdEQY2XCqEaL5-fewu1Vg668AdA9J9R6zY8EXl4zJfEhA7-vYBF2ROpaEJ7-b7JaNAGhRuJFeVj41F7EmrDns-U0uEI-bYaQ",
+               "width" : 3264
+            }
+         ],
+         "place_id" : "ChIJnVSW4r_nuY4R6SbuNe8ph6g",
+         "plus_code" : {
+            "compound_code" : "GMXV+V5 Port-au-Prince",
+            "global_code" : "77C9GMXV+V5"
+         },
+         "price_level" : 2,
+         "rating" : 3.7,
+         "reference" : "ChIJnVSW4r_nuY4R6SbuNe8ph6g",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1334
+      },
        {
           "business_status" : "OPERATIONAL",
           "formatted_address" : "Port-au-Prince, Haïti",

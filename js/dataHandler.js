@@ -3,6 +3,7 @@ class DataHandler{
     this.data;
     this.dataFormSession = {};
     this.prefix = prefix;
+    this.dataGoogle;
   }
 
   getSession(key){
@@ -20,7 +21,10 @@ class DataHandler{
     this.importSession();
     // await this.importFromGoogle();
     initmap();
+  }
 
+  async importDataFromGoogle(src){
+    await this.importFromGoogle(src)
   }
 
   async importJson(src){
@@ -42,28 +46,6 @@ class DataHandler{
     }
   }
     
-
-
-
-/*
- forme des données dans le sessionStorage
-  {
-    nomDuRestaurant: [
-      {
-          "stars":5,
-          "comment":"Tout simplement mon restaurant préféré !"
-       },
-      {
-          "stars":5,
-          "comment":"Tout simplement mon restaurant préféré !"
-       },
-    ]
-  }
-
-
- */
-
-
   getEvaluation(restaurant){
     for(let [key, value] of Object.entries(this.data)){
       if(value.restaurantName === restaurant){
@@ -76,7 +58,7 @@ class DataHandler{
   async importFromGoogle(src){
     const response = await fetch(src);
     let dataGoogle = await response.json();
-    this.data = dataGoogle.results;
+    this.dataGoogle = dataGoogle.results;
+    return this.dataGoogle
   }
-
 }

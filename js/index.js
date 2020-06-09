@@ -67,7 +67,7 @@ function addMarker (lat, long, text){
 }
 
 function addGoogleStreetView(lat, long){
-    $.ajax({
+    /**  $.ajax({
         url : `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${lat},${long}
         &fov=80&heading=70&pitch=0
         &key=AIzaSyD6wzc3Dt0s52UvU58e_iScfPAsc0qjlsY&signature=wBRD9N8gsy7COpHeYN-zW_Z3e_8=`,
@@ -78,7 +78,9 @@ function addGoogleStreetView(lat, long){
         error : function(resultat, statut, erreur){
             alert('Error statut : '+ statut + ' '+ erreur)
         }
-    })
+    }) */
+
+    $('#myModal').modal('show')
 }
 
 window.addGoogleStreetView = addGoogleStreetView
@@ -114,7 +116,7 @@ function addRestau (lat, long, nom, score, comment) {
     $('#add_comment').val('');
 }
 
-function addRestauFromGoogleMapApi(){
+ async function addRestauFromGoogleMapApi(){
     if($('#search').val() === ''){
         $('.alert').addClass("alert alert-warning alert-dismissible fade show")
         return;
@@ -129,15 +131,14 @@ function addRestauFromGoogleMapApi(){
     let output = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input}&key=`
     console.log(output)
 
-    dataManager.importFromGoogle('./search.json')
+    await dataManager.importDataFromGoogle('./search.json')
 
-    console.log(dataManager.data)
+    console.log(dataManager.dataGoogle)
 
-    for (let index = 0; index < dataManager.data.length; index++) {
-        const element = dataManager.data[index];
+    for (let index = 0; index < dataManager.dataGoogle.length; index++) {
+        const element = dataManager.dataGoogle[index];
         createRestau(element)
     }
-
 } 
 
 function createRestau(datas){

@@ -7,21 +7,27 @@ class Restaurant {
       this.name     = data.restaurantName;
       this.lat      = data.lat;
       this.long     = data.long;
-      // var dataComments = sessionStorage.getItem(`comment-${this.name}`);
-      // console.log(dataComments)
-      // if(dataComments === null){
-      //   console.log('fff1')
-      //   this.comments = data.ratings;
-      //   dataComments = sessionStorage.setItem(`comment-${this.name}`, JSON.stringify(data.ratings));
-      // }else{
-      //   console.log('fff2')
-      //   this.comments = JSON.parse(dataComments);
-      // }
-      
       this.comments = dataManager.getEvaluation(this.name);
 
+      if(dataManager.getEvaluation(this.name)){
+        let score = 0;
+        for (let index = 0; index < this.comments.length; index++) {
+          score += this.comments[index].stars;
+          console.log("--- avering "+ this.comments[index].stars)
+        }
+        this.avering = score / this.comments.length;
+      }else{
+        this.comments = [];
+        this.avering = data.ratings[0].stars
+        console.log('1 ___ data.rating '+ data.ratings[0].stars)
+      }
 
-      this.average();
+      let method = data.restaurantName
+      method = method.split(' ').join('_')
+      method = method.split('&').join('_')
+      method = method.split("'").join('_')
+      method = method.split("-").join('_')
+      this.id = method
 
       this.viewDetails = false;
       this.addMarker();
@@ -39,19 +45,27 @@ class Restaurant {
       }.bind(this));
 
       this.userRating = null;
+
+      window[this.id] = this;
+
+      console.log(this.id)
     }
 
     initialRender(){
-      this.DOM.onclick = this.showHideRatings.bind(this);
-      this.DOM.className = 'list-group-item';
-      document.getElementsByTagName("ul")[0].appendChild(this.DOM);
-      this.DOM.innerHTML = this.name;
-      this.DOMstar.className="rating";
-      // this.DOMstar.setAttribute("data-stars", 15);
-      this.DOMstar.setAttribute("data-default-rating", this.avering);
-      this.DOMstar.onclick = this.starClick;
-      this.DOM.appendChild(this.DOMstar);
-      this.DOM.appendChild(this.DOMcomments);
+      if(this.avering >= 4){
+        this.DOM.onclick = this.showHideRatings.bind(this);
+        this.DOM.className = 'list-group-item';
+        document.getElementsByTagName("ul")[0].appendChild(this.DOM);
+        this.DOM.innerHTML = this.name;
+        this.DOMstar.className="rating";
+        // this.DOMstar.setAttribute("data-stars", 15);
+        this.DOMstar.setAttribute("data-default-rating", this.avering);
+        this.DOMstar.onclick = this.starClick;
+        this.DOM.appendChild(this.DOMstar);
+        this.DOM.appendChild(this.DOMcomments);
+
+        console.log('___ data.rating '+this.avering)
+      }
     }
 
     starClick(e){
@@ -59,18 +73,6 @@ class Restaurant {
       return
     }
 
-    newRating(event){     
-    }
-
-
-    average(){
-      let score = 0;
-      for (let index = 0; index < this.comments.length; index++) {
-        score += this.comments[index].stars;
-        console.log(this.comments[index].stars)
-      }
-      this.avering = score / this.comments.length;
-    }
 
     makeStars(qty){
       let stars = "";
@@ -80,7 +82,7 @@ class Restaurant {
 
     renderComment() {
       let content = "";
-      if (this.viewDetails){
+      if (this.viewDetails ){
         content +=`
         <ul>${this.renderRatings()}</ul>
       `;
@@ -91,7 +93,7 @@ class Restaurant {
     addComment(){
       
       const stars = this.stars
-      const comment = document.querySelector(`#${this.name}Comment`).value;
+      const comment = document.querySelector(`#${this.id}Comment`).value;
       if(comment === ''){
         alert('SVP AJOUTE UN COMMENNTAIRE')
         return
@@ -105,7 +107,7 @@ class Restaurant {
       dataManager.addComment(this.name, rates);
 
       this.renderComment()
-      document.querySelector(`#${this.name}Comment`).value = '';
+      document.querySelector(`#${this.id}Comment`).value = '';
       this.stars = '';
       return ;
     }
@@ -113,11 +115,10 @@ class Restaurant {
     renderAddComment(){
       return  `
           <div onclick="event.stopPropagation();">
-          <input name="commentaires" class='form-control form-control-sm' id='${this.name}Comment' placeholder="ajouter un commentaire">
+          <input name="commentaires" class='form-control form-control-sm' id='${this.id}Comment' placeholder="ajouter un commentaire">
           </div>
-          <button class='btn btn-sm btn-primary mt-1' onclick="event.stopPropagation();window.${this.name}.addComment() ">ajoute un commentaire</button>
+          <button class='btn btn-sm btn-primary mt-1' onclick="event.stopPropagation();window.${this.id}.addComment() ">ajoute un commentaire</button>
         `;
-       
     }
 
     renderRatings(){
