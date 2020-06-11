@@ -118,10 +118,10 @@ function addRestau (lat, long, nom, score, comment) {
 
  async function addRestauFromGoogleMapApi(){
     if($('#search').val() === ''){
-        $('.alert').addClass("alert alert-warning alert-dismissible fade show")
+        $('#search').removeClass("form-control").addClass('form-control is-invalid')
         return;
     }else{
-        $('.alert').removeClass("alert alert-warning alert-dismissible fade show").addClass('alert alert-warning alert-dismissible fade hide')
+        $('#search').removeClass("form-control is-invalid").addClass('form-control is-valid')
     }
     let input =  $('#search').val()
 
@@ -139,6 +139,7 @@ function addRestau (lat, long, nom, score, comment) {
         const element = dataManager.dataGoogle[index];
         createRestau(element)
     }
+    $('#search').val('')
 } 
 
 function createRestau(datas){
