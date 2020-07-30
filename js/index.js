@@ -10,7 +10,6 @@ function initmap(){
     let myLatitide = null;
     let myLongitude = null;
     let mymap = null;
-    let googleToken = 'AIzaSyCggw-r9vntpJDBsUx-rTyNevUzlqLlyew';
     
 
     if ("geolocation" in navigator) {
@@ -34,7 +33,7 @@ function initmap(){
 
 /** display map and user position  */
 
-function mapDisplay(lat, long , data=[]){
+function mapDisplay(lat, long ){
 
     mymap = L.map('map').setView([lat, long], 2);
 
@@ -46,10 +45,8 @@ function mapDisplay(lat, long , data=[]){
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoiZGp0cnVld2F5IiwiYSI6ImNrODRvbHBqcTAxbXUzZnBleXR0cnQ0d2oifQ.PkWU4kpbQBnHCBkmTNHYtA'
     }).addTo(mymap);
-    addMarker(lat, long, 'je suis peterson')
-    data.forEach(e => {
-        addMarker(e.lat, e.long)
-    })
+    // add user on the map 
+    addMarker(lat, long, 'je suis peterson');
 
     for (let index = 0; index < dataManager.data.length; index++) {
         let tmp = new Restaurant(dataManager.data[index]);
@@ -58,6 +55,13 @@ function mapDisplay(lat, long , data=[]){
    
 }
 
+
+/**
+ * 
+ * @param {latitude } lat 
+ * @param {longitude} long 
+ * @param {description } text 
+ */
 function addMarker (lat, long, text){
     var marker = L.marker([lat, long]).addTo(mymap).on('click', (e) =>{
         addGoogleStreetView(e.latlng.lat, e.latlng.long)
@@ -66,21 +70,29 @@ function addMarker (lat, long, text){
     marker.bindPopup(msg);
 }
 
+/**
+ * 
+ * @param {latitude} lat 
+ * @param {longitude} long 
+ */
 function addGoogleStreetView(lat, long){
-    /**  $.ajax({
-        url : `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${lat},${long}
-        &fov=80&heading=70&pitch=0
-        &key=AIzaSyD6wzc3Dt0s52UvU58e_iScfPAsc0qjlsY&signature=wBRD9N8gsy7COpHeYN-zW_Z3e_8=`,
-        type : 'GET',
-        success : function(data){
-            alert(data)
-        },
-        error : function(resultat, statut, erreur){
-            alert('Error statut : '+ statut + ' '+ erreur)
+    panorama = new google.maps.StreetViewPanorama(
+        document.getElementById("modal-img"),
+        {
+          position: {
+            lat: lat,
+            lng: long
+          },
+          pov: {
+            heading: 165,
+            pitch: 0
+          },
+          zoom: 1
         }
-    }) */
+      );
 
-    $('#myModal').modal('show')
+      $('#myModal').modal('show')
+
 }
 
 window.addGoogleStreetView = addGoogleStreetView
@@ -128,10 +140,10 @@ function addRestau (lat, long, nom, score, comment) {
     input = input.split(' ').join('+');
     console.log(input)
 
-    let output = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input}&key=`
+    let output = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${input}&key=AIzaSyB-dRps4HvUM88b3FJx_j4DoNKFsJNAcEc`
     console.log(output)
 
-    await dataManager.importDataFromGoogle('./search.json')
+    await dataManager.importDataFromGoogle(output)
 
     console.log(dataManager.dataGoogle)
 

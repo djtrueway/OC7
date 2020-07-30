@@ -21,7 +21,7 @@ class Restaurant {
         this.avering = data.ratings[0].stars
         console.log('1 ___ data.rating '+ data.ratings[0].stars)
       }
-
+      // give each restaurant a unique id
       let method = data.restaurantName
       method = method.split(' ').join('_')
       method = method.split('&').join('_')
@@ -51,6 +51,7 @@ class Restaurant {
       console.log(this.id)
     }
 
+    // filter restaurant to diplay in the dom
     initialRender(){
       if(this.avering >= 4){
         this.DOM.onclick = this.showHideRatings.bind(this);
@@ -73,7 +74,7 @@ class Restaurant {
       return
     }
 
-
+    // make start with '*'
     makeStars(qty){
       let stars = "";
       for (let i=0; i<qty; i++) stars +="*";
@@ -89,7 +90,7 @@ class Restaurant {
       }
       this.DOMcomments.innerHTML =  content;
     }
-
+    // add comment for each restaurant
     addComment(){
       
       const stars = this.stars
@@ -111,7 +112,7 @@ class Restaurant {
       this.stars = '';
       return ;
     }
-
+    // form for add comment
     renderAddComment(){
       return  `
           <div onclick="event.stopPropagation();">
@@ -138,7 +139,7 @@ class Restaurant {
       this[key] = value;
       this.renderComment();
     }
-
+    // add restaurant to the map 
     addMarker ( ){
       var marker = L.marker([this.lat, this.long]).addTo(mymap).on('click', (e) =>{
          // alert('make ajax request to the api')
